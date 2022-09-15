@@ -2,8 +2,12 @@
 
 <title> {% block title %}Home{% endblock %}</title>
 
-{% block content %} <h1>Profile Page</h1> 
+{% block content %} <h1>Profile Page</h1>
+<h2> Welcome {{current_user.firstName}}</h2> 
 <div class="top-bar" id = "logout">
-    <a href="/logout"
+    <div>
+        <h2> Username: {{current_user.}}</h2>
+    </div>
+    <a href="/logout">logout</a>
 </div>
 {% endblock %} 
