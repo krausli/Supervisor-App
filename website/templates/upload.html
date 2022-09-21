@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+<title> {% block title %}Upload{% endblock %}</title>
+
+{% block content %} 
+<div>
+<br>
+<div>
+    {{form.file}} 
+</div>
+</div>
+<div>
+         {{form.submit}}
+</div>
+
+<div>
+    <p><a href="/saved-reviews">Saved reviews</a></p>
+</div>
+
+{% endblock %}

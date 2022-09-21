@@ -6,9 +6,30 @@
 <br/>
 <br/>
 <h1 align = "centre">Saved Reviews</h1> 
+<div class="content">
+    {% for reviews in reviews %}
+        <div class="review">
+            <p><b>#{{ reviews.id }}</b></p>
+            <b>
+                <p class="title">
+                    <a href="#">
+                        {{ reviews.title }}
+                    </a>
+                </p>
+            </b>
+            <div class="content">
+                <p>{{ reviews.content }}</p>
+            </div>
+            <hr>
+        </div>
+    {% endfor %}
+</div>
 
 <div>
     <p><a href="/professional-practice">Create New Reviews</a></p>
+</div>
+<div>
+    <p><a href="/upload">Upload Appraisal Form</a></p>
 </div>
 <div>
     <p><a href="/profile">My Account</a></p>
