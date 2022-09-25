@@ -5,7 +5,7 @@
 {% block content %} 
 
 <br> 
-<form method = "POST">
+<form method = "POST" action = "">
     {{ form.hidden_tag() }}
     <div>
     <br>
@@ -31,6 +31,9 @@
       <div>
           {{ form.actions.label }} {{form.actions}}
       </div>
+      <div >
+        {{form.date}}
+    </div>
     
   </div>
   
@@ -50,11 +53,15 @@
           {{ form.evidence2.label }} {{ form.evidence2 }} </div>
       <div>
           {{ form.actions2.label }} {{form.actions2}}</div>
+        
+          <div>
+        {{form.date2}}</div>
+    
           
       
   </div>
-
-  {{form.submit}}
+<div> {{form.submit}}</div>
+  
 </form>
 <p><a href="/">Submit</a></p>
 

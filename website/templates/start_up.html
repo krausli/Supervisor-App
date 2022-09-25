@@ -8,13 +8,12 @@
 <h1 align = "centre">Start Up Page</h1> 
 <br/>
 <div>
-    <form>
-        <label for="cars">What is your position?:</label>
-        <select name="cars" id="cars">
-          <option value="volvo">Manager</option>
-          <option value="saab">Supervisor</option>
-          <option value="mercedes">Admin</option>
-        </select>
+    <form method = "POST" action = "">
+        <a>What is your position?:</a>
+        
+        <div><a href="/admin-sign-up">{{ form.manager }}{{form.manager.label}}</a></div>
+        <div><a href="/sign-up" >{{form.supervisor}}</a></div>
+        <div><a href="/admin-sign-up">{{form.admin}}</a></div>
         </form>
 </div>
 {% endblock %} 

@@ -1,10 +1,9 @@
 {% extends "base.html" %}
 
-<title> {% block title %}Sign Up{% endblock %}</title>
+<title> {% block title %}Administrator Sign Up{% endblock %}</title>
 
 {% block content %} 
-
-<form method = "POST" action="{{url_for('auth.sign_up')}}">
+<form method = "POST" action="{{url_for('auth.admin_sign_up')}}">
     {{ form.hidden_tag() }}
     {{form.csrf_token}}
     <fieldset class="form-group">

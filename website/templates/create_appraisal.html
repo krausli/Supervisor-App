@@ -1,0 +1,913 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="content-section">
+    <form method="POST" action="">
+        {{ form.hidden_tag() }}
+        {{ form.csrf_token }}
+        <fieldset class="form-group">
+            <legend class="border-bottom mb-4">{{ legend }}</legend>
+            <div>
+                <h2> Supervisor Appraisal Form</h2>
+            </div>
+            <div class = "form-group">
+                {{form.title.label(class="form-control-label")}}
+                {{form.title(class="form-control form-control-lg")}}
+            </div>
+            <div class="form-group">
+                <h3>1.Professional Practice</h3>
+                <p>1.1 Aware of and complies with current legislation relevant to the role </p>
+                <div>
+                    {{ form.choices.label(class="form-control-label") }}
+                {% if form.choices.errors %}
+                    {{ form.choices(class="form-control form-control-lg is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in form.choices.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                
+                <div>
+                {% else %}
+                   {% for choices in form.choices %}
+
+                    {{ choices.label}}
+                    {{ choices}}
+
+                      
+                {% endfor %} 
+                {% endif %}
+                </div>
+                
+                </div>
+                <div>
+                    {{ form.comments.label(class="form-control-label") }}
+                    {% if form.comments.errors %}
+                        {{ form.comments(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.comments.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.comments(class="form-control form-control-lg") }}
+                    {% endif %}  
+                </div>
+                <div>
+                    {{ form.evidence.label(class="form-control-label") }}
+                    {% if form.evidence.errors %}
+                        {{ form.evidence(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.evidence.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.evidence(class="form-control form-control-lg") }}
+                    {% endif %}
+                </div>
+                <div>
+                    {{ form.actions.label(class="form-control-label") }}
+                    {% if form.actions.errors %}
+                        {{ form.actions(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.actions.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.actions(class="form-control form-control-lg") }}
+                    {% endif %}
+                </div>
+                  
+            </div>
+            <div class="form-group">
+                <p>1.2 Aware of and complies with organisation requirements</p>
+                <div>
+                    {{ form.choices2.label(class="form-control-label") }}
+                {% if form.choices2.errors %}
+                    {{ form.choices2(class="form-control form-control-lg is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in form.choices2.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                
+                <div>
+                {% else %}
+                   {% for choices2 in form.choices2 %}
+
+                    {{ choices2.label}}
+                    {{ choices2}}
+
+                      
+                {% endfor %} 
+                {% endif %}
+                </div>
+                <div>
+                    {{ form.comments2.label(class="form-control-label") }}
+                    {% if form.comments2.errors %}
+                        {{ form.comments2(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.comments2.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.comments2(class="form-control form-control-lg") }}
+                    {% endif %}
+                </div>
+                <div>
+                    {{ form.evidence2.label(class="form-control-label") }}
+                    {% if form.evidence2.errors %}
+                        {{ form.evidence2(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.evidence2.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.evidence2(class="form-control form-control-lg") }}
+                    {% endif %}
+                </div>
+                <div>
+                    {{ form.actions2.label(class="form-control-label") }}
+                    {% if form.actions2.errors %}
+                        {{ form.actions2(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.actions2.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.actions2(class="form-control form-control-lg") }}
+                    {% endif %}
+                </div>
+                <div class = "form-group">
+                    <p> 1.3 Relevant professional learning completed</p>
+                    <div>
+                        {{form.choices3.label(class="form-control-label")}}
+                        {% if form.choices3.errors %}
+                            {{ form.choices3(class="form-control form-control-lg is-invalid") }}
+                            <div class="invalid-feedback">
+                                {% for error in form.choices3.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                            <div>
+                                {% else %}
+                                   {% for choices3 in form.choices3 %}
+                
+                                    {{ choices3.label}}
+                                    {{ choices3}}
+                
+                                      
+                                {% endfor %} 
+                                {% endif %}
+                                </div>
+                    </div>
+                    <div>
+                        {{ form.comments3.label(class="form-control-label") }}
+                        {% if form.comments3.errors %}
+                            {{ form.comments3(class="form-control form-control-lg is-invalid") }}
+                            <div class="invalid-feedback">
+                                {% for error in form.comments3.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            {{ form.comments3(class="form-control form-control-lg") }}
+                        {% endif %}
+                    </div>
+                    <div>
+                        {{ form.evidence3.label(class="form-control-label") }}
+                        {% if form.evidence3.errors %}
+                            {{ form.evidence3(class="form-control form-control-lg is-invalid") }}
+                            <div class="invalid-feedback">
+                                {% for error in form.evidence3.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            {{ form.evidence3(class="form-control form-control-lg") }}
+                        {% endif %}
+                    </div>
+                    <div>
+                        {{ form.actions3.label(class="form-control-label") }}
+                        {% if form.actions3.errors %}
+                            {{ form.actions3(class="form-control form-control-lg is-invalid") }}
+                            <div class="invalid-feedback">
+                                {% for error in form.actions3.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            {{ form.actions3(class="form-control form-control-lg") }}
+                        {% endif %}
+                    </div>
+                </div>
+                <div class = "form-group">
+                    <p> 1.4 Safe Workplace health and safety practices</p>
+                    <div>
+                        {{form.choices4.label(class="form-control-label")}}
+                        {% if form.choices4.errors %}
+                            {{ form.choices4(class="form-control form-control-lg is-invalid") }}
+                            <div class="invalid-feedback">
+                                {% for error in form.choices4.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                            <div>
+                                {% else %}
+                                   {% for choices4 in form.choices4 %}
+                
+                                    {{ choices4.label}}
+                                    {{ choices4}}
+                
+                                      
+                                {% endfor %} 
+                                {% endif %}
+                                </div>
+                    </div>
+                    <div>
+                        {{ form.comments4.label(class="form-control-label") }}
+                        {% if form.comments4.errors %}
+                            {{ form.comments4(class="form-control form-control-lg is-invalid") }}
+                            <div class="invalid-feedback">
+                                {% for error in form.comments4.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            {{ form.comments4(class="form-control form-control-lg") }}
+                        {% endif %}
+                    </div>
+                    <div>
+                        {{ form.evidence4.label(class="form-control-label") }}
+                        {% if form.evidence4.errors %}
+                            {{ form.evidence4(class="form-control form-control-lg is-invalid") }}
+                            <div class="invalid-feedback">
+                                {% for error in form.evidence4.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            {{ form.evidence4(class="form-control form-control-lg") }}
+                        {% endif %}
+                    </div>
+                    <div>
+                        {{ form.actions4.label(class="form-control-label") }}
+                        {% if form.actions4.errors %}
+                            {{ form.actions4(class="form-control form-control-lg is-invalid") }}
+                            <div class="invalid-feedback">
+                                {% for error in form.actions4.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            {{ form.actions4(class="form-control form-control-lg") }}
+                        {% endif %}
+                    </div>
+                </div>
+                <br>
+                <div class = "form-group">
+                    <h3> 2.Supervision Practice</h3>
+                    <p>2.1 Contributes to safe activities and environment for all boarders. </p>
+                    <div>
+                        {{form.choices5.label(class="form-control-label")}}
+                        {% if form.choices5.errors %}
+                            {{ form.choices5(class="form-control form-control-lg is-invalid") }}
+                            <div class="invalid-feedback">
+                                {% for error in form.choices5.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                        </div>
+                                {% else %}
+                                   {% for choices5 in form.choices5 %}
+                
+                                    {{ choices5.label}}
+                                    {{ choices5}}
+                
+                                      
+                                {% endfor %} 
+                                {% endif %}
+                                </div>
+                    </div>
+                    <div>
+                        {{ form.comments5.label(class="form-control-label") }}
+                        {% if form.comments5.errors %}
+                            {{ form.comments5(class="form-control form-control-lg is-invalid") }}
+                            <div class="invalid-feedback">
+                                {% for error in form.comments5.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            {{ form.comments5(class="form-control form-control-lg") }}
+                        {% endif %}
+                    </div>
+                    <div>
+                        {{ form.evidence5.label(class="form-control-label") }}
+                        {% if form.evidence5.errors %}
+                            {{ form.evidence5(class="form-control form-control-lg is-invalid") }}
+                            <div class="invalid-feedback">
+                                {% for error in form.evidence5.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            {{ form.evidence5(class="form-control form-control-lg") }}
+                        {% endif %}
+                    </div>
+                    <div>
+                        {{ form.actions5.label(class="form-control-label") }}
+                        {% if form.actions5.errors %}
+                            {{ form.actions5(class="form-control form-control-lg is-invalid") }}
+                            <div class="invalid-feedback">
+                                {% for error in form.actions5.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            {{ form.actions5(class="form-control form-control-lg") }}
+                        {% endif %}
+                    </div>
+                </div>
+                <div class = "form-group">
+                    <p>2.2 Has respectful professional relationships with all boarders. </p>
+                    <div>
+                        {{form.choices6.label(class="form-control-label")}}
+                        {% if form.choices6.errors %}
+                            {{ form.choices6(class="form-control form-control-lg is-invalid") }}
+                            <div class="invalid-feedback">
+                                {% for error in form.choices6.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                            <div>
+                                {% else %}
+                                   {% for choices6 in form.choices6 %}
+                
+                                    {{ choices6.label}}
+                                    {{ choices6}}
+                
+                                      
+                                {% endfor %} 
+                                {% endif %}
+                                </div>
+                    </div>
+                    <div>
+                        {{ form.comments6.label(class="form-control-label") }}
+                        {% if form.comments6.errors %}
+                            {{ form.comments6(class="form-control form-control-lg is-invalid") }}
+                            <div class="invalid-feedback">
+                                {% for error in form.comments6.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            {{ form.comments6(class="form-control form-control-lg") }}
+                        {% endif %}
+                    </div>
+                    <div>
+                        {{ form.evidence6.label(class="form-control-label") }}
+                        {% if form.evidence6.errors %}
+                            {{ form.evidence6(class="form-control form-control-lg is-invalid") }}
+                            <div class="invalid-feedback">
+                                {% for error in form.evidence6.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            {{ form.evidence6(class="form-control form-control-lg") }}
+                        {% endif %}
+                    </div>
+                    <div>
+                        {{ form.actions6.label(class="form-control-label") }}
+                        {% if form.actions6.errors %}
+                            {{ form.actions6(class="form-control form-control-lg is-invalid") }}
+                            <div class="invalid-feedback">
+                                {% for error in form.actions6.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            {{ form.actions6(class="form-control form-control-lg") }}
+                        {% endif %}
+                    </div>
+                </div>
+                <div class = "form-group">
+                    <p>2.3 Supervises boarders effectively, supporting and meeting needs</p>
+                    <div>
+                        {{form.choices7.label(class="form-control-label")}}
+                        {% if form.choices7.errors %}
+                            {{ form.choices7(class="form-control form-control-lg is-invalid") }}
+                            <div class="invalid-feedback">
+                                {% for error in form.choices7.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                            <div>
+                                {% else %}
+                                   {% for choices7 in form.choices7 %}
+                
+                                    {{ choices7.label}}
+                                    {{ choices7}}
+                
+                                      
+                                {% endfor %} 
+                                {% endif %}
+                                </div>
+                    </div>
+                    <div>
+                        {{ form.comments7.label(class="form-control-label") }}
+                        {% if form.comments7.errors %}
+                            {{ form.comments7(class="form-control form-control-lg is-invalid") }}
+                            <div class="invalid-feedback">
+                                {% for error in form.comments7.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            {{ form.comments7(class="form-control form-control-lg") }}
+                        {% endif %}
+                    </div>
+                    <div>
+                        {{ form.evidence7.label(class="form-control-label") }}
+                        {% if form.evidence7.errors %}
+                            {{ form.evidence7(class="form-control form-control-lg is-invalid") }}
+                            <div class="invalid-feedback">
+                                {% for error in form.evidence7.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            {{ form.evidence7(class="form-control form-control-lg") }}
+                        {% endif %}
+                    </div>
+                    <div>
+                        {{ form.actions7.label(class="form-control-label") }}
+                        {% if form.actions7.errors %}
+                            {{ form.actions7(class="form-control form-control-lg is-invalid") }}
+                            <div class="invalid-feedback">
+                                {% for error in form.actions7.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            {{ form.actions7(class="form-control form-control-lg") }}
+                        {% endif %}
+                    </div>
+                </div>
+                <div class = "form-group">
+                    <p>2.4 Facilitates positive boarder behaviours </p>
+                    <div>
+                        {{form.choices8.label(class="form-control-label")}}
+                        {% if form.choices8.errors %}
+                            {{ form.choices8(class="form-control form-control-lg is-invalid") }}
+                            <div class="invalid-feedback">
+                                {% for error in form.choices8.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                            <div>
+                                {% else %}
+                                   {% for choices8 in form.choices8 %}
+                
+                                    {{ choices8.label}}
+                                    {{ choices8}}
+                
+                                      
+                                {% endfor %} 
+                                {% endif %}
+                                </div>
+                    </div>
+                    <div>
+                        {{ form.comments8.label(class="form-control-label") }}
+                        {% if form.comments8.errors %}
+                            {{ form.comments8(class="form-control form-control-lg is-invalid") }}
+                            <div class="invalid-feedback">
+                                {% for error in form.comments8.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            {{ form.comments8(class="form-control form-control-lg") }}
+                        {% endif %}
+                    </div>
+                    <div>
+                        {{ form.evidence8.label(class="form-control-label") }}
+                        {% if form.evidence8.errors %}
+                            {{ form.evidence8(class="form-control form-control-lg is-invalid") }}
+                            <div class="invalid-feedback">
+                                {% for error in form.evidence8.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            {{ form.evidence8(class="form-control form-control-lg") }}
+                        {% endif %}
+                    </div>
+                    <div>
+                        {{ form.actions8.label(class="form-control-label") }}
+                        {% if form.actions8.errors %}
+                            {{ form.actions8(class="form-control form-control-lg is-invalid") }}
+                            <div class="invalid-feedback">
+                                {% for error in form.actions8.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            {{ form.actions8(class="form-control form-control-lg") }}
+                        {% endif %}
+                    </div>
+                </div>
+                <div class = "form-group">
+                    <p>2.5 Provides sensitive appropriate cultural support </p>
+                    <div>
+                        {{form.choices9.label(class="form-control-label")}}
+                        {% if form.choices9.errors %}
+                            {{ form.choices9(class="form-control form-control-lg is-invalid") }}
+                            <div class="invalid-feedback">
+                                {% for error in form.choices9.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                            <div>
+                                {% else %}
+                                   {% for choices9 in form.choices9 %}
+                
+                                    {{ choices9.label}}
+                                    {{ choices9}}
+                
+                                      
+                                {% endfor %} 
+                                {% endif %}
+                                </div>
+                    </div>
+                    <div>
+                        {{ form.comments9.label(class="form-control-label") }}
+                        {% if form.comments9.errors %}
+                            {{ form.comments9(class="form-control form-control-lg is-invalid") }}
+                            <div class="invalid-feedback">
+                                {% for error in form.comments9.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            {{ form.comments9(class="form-control form-control-lg") }}
+                        {% endif %}
+                    </div>
+                    <div>
+                        {{ form.evidence9.label(class="form-control-label") }}
+                        {% if form.evidence9.errors %}
+                            {{ form.evidence9(class="form-control form-control-lg is-invalid") }}
+                            <div class="invalid-feedback">
+                                {% for error in form.evidence9.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            {{ form.evidence9(class="form-control form-control-lg") }}
+                        {% endif %}
+                    </div>
+                    <div>
+                        {{ form.actions9.label(class="form-control-label") }}
+                        {% if form.actions9.errors %}
+                            {{ form.actions9(class="form-control form-control-lg is-invalid") }}
+                            <div class="invalid-feedback">
+                                {% for error in form.actions9.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            {{ form.actions9(class="form-control form-control-lg") }}
+                        {% endif %}
+                    </div>
+                </div>
+                <div class = "form-group">
+                    <h3> 3.Team Practice</h3>
+                    <p>3.1 Respects and support residence leadership </p>
+                    <div>
+                        {{form.choices10.label(class="form-control-label")}}
+                        {% if form.choices10.errors %}
+                            {{ form.choices10(class="form-control form-control-lg is-invalid") }}
+                            <div class="invalid-feedback">
+                                {% for error in form.choices10.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                            <div>
+                                {% else %}
+                                   {% for choices10 in form.choices10 %}
+                
+                                    {{ choices10.label}}
+                                    {{ choices10}}
+                
+                                      
+                                {% endfor %} 
+                                {% endif %}
+                                </div>
+                    </div>
+                    <div>
+                        {{ form.comments10.label(class="form-control-label") }}
+                        {% if form.comments10.errors %}
+                            {{ form.comments10(class="form-control form-control-lg is-invalid") }}
+                            <div class="invalid-feedback">
+                                {% for error in form.comments10.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            {{ form.comments10(class="form-control form-control-lg") }}
+                        {% endif %}
+                    </div>
+                    <div>
+                        {{ form.evidence10.label(class="form-control-label") }}
+                        {% if form.evidence10.errors %}
+                            {{ form.evidence10(class="form-control form-control-lg is-invalid") }}
+                            <div class="invalid-feedback">
+                                {% for error in form.evidence10.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            {{ form.evidence10(class="form-control form-control-lg") }}
+                        {% endif %}
+                    </div>
+                    <div>
+                        {{ form.actions10.label(class="form-control-label") }}
+                        {% if form.actions10.errors %}
+                            {{ form.actions10(class="form-control form-control-lg is-invalid") }}
+                            <div class="invalid-feedback">
+                                {% for error in form.actions10.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            {{ form.actions10(class="form-control form-control-lg") }}
+                        {% endif %}
+                    </div>
+                </div>
+                <div class = "form-group">
+                    <p>3.2 Has effective respectful relationships with other members of the team </p>
+                    <div>
+                        {{form.choices11.label(class="form-control-label")}}
+                        {% if form.choices11.errors %}
+                            {{ form.choices11(class="form-control form-control-lg is-invalid") }}
+                            <div class="invalid-feedback">
+                                {% for error in form.choices11.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                        <div>
+                            {% else %}
+                            {% for choices11 in form.choices11 %}
+         
+                             {{ choices11.label}}
+                             {{ choices11}}
+         
+                               
+                         {% endfor %} 
+                         {% endif %}
+                         </div>
+                    </div>
+                    <div>
+                        {{ form.comments11.label(class="form-control-label") }}
+                        {% if form.comments11.errors %}
+                            {{ form.comments11(class="form-control form-control-lg is-invalid") }}
+                            <div class="invalid-feedback">
+                                {% for error in form.comments11.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            {{ form.comments11(class="form-control form-control-lg") }}
+                        {% endif %}
+                    </div>
+                    <div>
+                        {{ form.evidence11.label(class="form-control-label") }}
+                        {% if form.evidence11.errors %}
+                            {{ form.evidence11(class="form-control form-control-lg is-invalid") }}
+                            <div class="invalid-feedback">
+                                {% for error in form.evidence11.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            {{ form.evidence11(class="form-control form-control-lg") }}
+                        {% endif %}
+                    </div>
+                    <div>
+                        {{ form.actions11.label(class="form-control-label") }}
+                        {% if form.actions11.errors %}
+                            {{ form.actions11(class="form-control form-control-lg is-invalid") }}
+                            <div class="invalid-feedback">
+                                {% for error in form.actions11.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            {{ form.actions11(class="form-control form-control-lg") }}
+                        {% endif %}
+                    </div>
+                </div>
+                <div class = "form-group">
+                    <p>3.3 Supports the induction and training of new team members</p>
+                    <div>
+                        {{form.choices12.label(class="form-control-label")}}
+                        {% if form.choices12.errors %}
+                            {{ form.choices12(class="form-control form-control-lg is-invalid") }}
+                            <div class="invalid-feedback">
+                                {% for error in form.choices12.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                            <div>
+                                {% else %}
+                                   {% for choices12 in form.choices12 %}
+                
+                                    {{ choices12.label}}
+                                    {{ choices12}}
+                
+                                      
+                                {% endfor %} 
+                                {% endif %}
+                                </div>
+                    </div>
+                    <div>
+                        {{ form.comments12.label(class="form-control-label") }}
+                        {% if form.comments12.errors %}
+                            {{ form.comments12(class="form-control form-control-lg is-invalid") }}
+                            <div class="invalid-feedback">
+                                {% for error in form.comments12.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            {{ form.comments12(class="form-control form-control-lg") }}
+                        {% endif %}
+                    </div>
+                    <div>
+                        {{ form.evidence12.label(class="form-control-label") }}
+                        {% if form.evidence12.errors %}
+                            {{ form.evidence12(class="form-control form-control-lg is-invalid") }}
+                            <div class="invalid-feedback">
+                                {% for error in form.evidence12.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            {{ form.evidence12(class="form-control form-control-lg") }}
+                        {% endif %}
+                    </div>
+                    <div>
+                        {{ form.actions12.label(class="form-control-label") }}
+                        {% if form.actions12.errors %}
+                            {{ form.actions12(class="form-control form-control-lg is-invalid") }}
+                            <div class="invalid-feedback">
+                                {% for error in form.actions12.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            {{ form.actions12(class="form-control form-control-lg") }}
+                        {% endif %}
+                    </div>
+                </div>
+                <div class = form-group>
+                    <h3> 4.Administration Practice</h3>
+                    <p>4.1 Reports and records effectively and as required </p>
+                    <div>
+                        {{form.choices13.label(class="form-control-label")}}
+                        {% if form.choices13.errors %}
+                            {{ form.choices13(class="form-control form-control-lg is-invalid") }}
+                            <div class="invalid-feedback">
+                                {% for error in form.choices13.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                            <div>
+                                {% else %}
+                                   {% for choices13 in form.choices13 %}
+                
+                                    {{ choices13.label}}
+                                    {{ choices13}}
+                
+                                      
+                                {% endfor %} 
+                                {% endif %}
+                                </div>
+                    </div>
+                    <div>
+                        {{ form.comments13.label(class="form-control-label") }}
+                        {% if form.comments13.errors %}
+                            {{ form.comments13(class="form-control form-control-lg is-invalid") }}
+                            <div class="invalid-feedback">
+                                {% for error in form.comments13.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            {{ form.comments13(class="form-control form-control-lg") }}
+                        {% endif %}
+                    </div>
+                    <div>
+                        {{ form.evidence13.label(class="form-control-label") }}
+                        {% if form.evidence13.errors %}
+                            {{ form.evidence13(class="form-control form-control-lg is-invalid") }}
+                            <div class="invalid-feedback">
+                                {% for error in form.evidence13.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            {{ form.evidence13(class="form-control form-control-lg") }}
+                        {% endif %}
+                    </div>
+                    <div>
+                        {{ form.actions13.label(class="form-control-label") }}
+                        {% if form.actions13.errors %}
+                            {{ form.actions13(class="form-control form-control-lg is-invalid") }}
+                            <div class="invalid-feedback">
+                                {% for error in form.actions13.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            {{ form.actions13(class="form-control form-control-lg") }}
+                        {% endif %}
+                    </div>
+            </div>
+            <div class = form-group>
+                <p>4.2 Effective parent and school staff relationships </p>
+                <div>
+                    {{form.choices14.label(class="form-control-label")}}
+                    {% if form.choices14.errors %}
+                        {{ form.choices14(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.choices14.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                        <div>
+                            {% else %}
+                               {% for choices14 in form.choices14 %}
+            
+                                {{ choices14.label}}
+                                {{ choices14}}
+            
+                                  
+                            {% endfor %} 
+                            {% endif %}
+                            </div>
+                </div>
+                <div>
+                    {{ form.comments14.label(class="form-control-label") }}
+                    {% if form.comments14.errors %}
+                        {{ form.comments14(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.comments14.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.comments14(class="form-control form-control-lg") }}
+                    {% endif %}
+                </div>
+                <div>
+                    {{ form.evidence14.label(class="form-control-label") }}
+                    {% if form.evidence14.errors %}
+                        {{ form.evidence14(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.evidence14.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.evidence14(class="form-control form-control-lg") }}
+                    {% endif %}
+                </div>
+                <div>
+                    {{ form.actions14.label(class="form-control-label") }}
+                    {% if form.actions14.errors %}
+                        {{ form.actions14(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.actions14.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.actions14(class="form-control form-control-lg") }}
+                    {% endif %}
+                </div>
+            </div>
+        </fieldset>
+        <div class="form-group">
+            {{ form.submit(class="btn btn-outline-info") }}
+        </div>
+    </form>
+</div>
+
+{% endblock %}

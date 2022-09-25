@@ -1,10 +1,7 @@
 {% extends "base.html" %}
-
-<title> {% block title %} My Reviews {% endblock %}</title>
-
-{% block content %} 
+{% block content %}
 <div>
-  <h2> My Reviews </h2>
+    <h2> Managed Reviews </h2>
 </div>
 {% for review in reviews %}
         <article class="media content-section">
@@ -14,9 +11,9 @@
               <a class="mr-2" href="#">{{ review.author.name }}</a>
               <small class="text-muted">{{ review.date_posted.strftime('%Y-%m-%d') }}</small>
             </div>
-            <h2><a class="article-title" href="{{ url_for('views.create_appraisal') }}">{{ review.title }}</a></h2>
+            <h2><a class="article-title">{{ review.title }}</a></h2>
             <p class="article-content">{{ review.survey }}</p>
           </div>
         </article>
     {% endfor %}
-{% endblock %} 
+{% endblock%}

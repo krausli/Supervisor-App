@@ -6,7 +6,7 @@
 
 <br>
     
-<form method="POST">
+<form method="POST" action = "">
     {{ form.hidden_tag() }}
     <div>
         <br>
@@ -33,6 +33,9 @@
     <div>
         {{ form.actions.label }} {{form.actions}}
     </div>
+    <div >
+        {{form.date}}
+    </div>
   </div>
   <p>3.2 Has effective respectful relationships with other members of the team </p>
     <div>
@@ -50,6 +53,8 @@
         {{ form.evidence2.label }} {{ form.evidence2 }}</div>
     <div>
         {{ form.actions2.label }} {{form.actions2}}</div>
+    <div >
+        {{form.date2}}</div>
 
     </div>
     <p>3.3 Supports the induction and training of new team members</p>
@@ -67,6 +72,8 @@
         {{ form.evidence3.label }} {{ form.evidence3 }} </div>
     <div>
         {{ form.actions3.label }} {{form.actions3}}</div>
+    <div >
+        {{form.date3}}</div>
     <div>{{form.submit}} </div>
     <div> <p><a href="/administration-practice">Next Page</a></p></div>
 

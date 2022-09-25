@@ -6,7 +6,7 @@
 
 <br>
     
-<form method="POST">
+<form method="POST" action = "">
     {{ form.hidden_tag() }}
     <div>
         <br>
@@ -34,6 +34,9 @@
         <div>
             {{ form.actions.label }} {{form.actions}}
         </div>
+        <div >
+            {{form.date}}
+       </div>
     </div>
     
   </div>
@@ -53,6 +56,9 @@
             {{ form.evidence2.label }} {{ form.evidence2 }} </div>
         <div>
             {{ form.actions2.label }} {{form.actions2}}</div>
+        <div >
+            {{form.date2}}
+        </div>
             </div>
         <p>2.3 Supervises boarders effectively, supporting and meeting needs</p>
         <div>
@@ -69,6 +75,9 @@
         {{ form.evidence3.label }} {{ form.evidence3 }} </div>
     <div>
         {{ form.actions3.label }} {{form.actions3}}</div>
+    <div >
+        {{form.date3}}
+    </div>
             <p>2.4 Facilitates positive boarder behaviours </p>
             <div>
                 </div>
@@ -85,7 +94,10 @@
             <div>
                 {{ form.evidence4.label }} {{ form.evidence4 }} </div>
             <div>
-                {{ form.actions4.label }} {{form.actions4}}</div>     
+                {{ form.actions4.label }} {{form.actions4}}</div>
+            <div >
+                {{form.date4}}
+            </div>     
     
                 <p>2.5 Provides sensitive appropriate cultural support </p>
                 <div>
@@ -104,6 +116,9 @@
                     {{ form.evidence5.label }} {{ form.evidence5 }} </div>
                 <div>
                     {{ form.actions5.label }} {{form.actions5}}</div>
+                <div >
+                    {{form.date5}}
+                </div>
 
                 <div>
                     {{form.submit}}
