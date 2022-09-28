@@ -1,16 +1,15 @@
 {% extends "base.html" %}
-
+<link rel="stylesheet" type="text/css" href="../static/main.css">
+<div class="raredog">
 <title> {% block title %}3.Team Practice{% endblock %}</title>
 
 {% block content %} 
-
 <br>
-    
 <form method="POST" action = "">
     {{ form.hidden_tag() }}
     <div>
         <br>
-        <h2> 3.Team Practice</h1>
+        <h2> 3.Team Practice</h2>
         </div>
     <div>
         <p>3.1 Respects and support residence leadership </p>
@@ -36,7 +35,6 @@
     <div >
         {{form.date}}
     </div>
-  </div>
   <p>3.2 Has effective respectful relationships with other members of the team </p>
     <div>
         {% for choices2 in form.choices2 %}
@@ -56,7 +54,6 @@
     <div >
         {{form.date2}}</div>
 
-    </div>
     <p>3.3 Supports the induction and training of new team members</p>
     <div>
         {% for choices3 in form.choices3 %}
@@ -76,11 +73,6 @@
         {{form.date3}}</div>
     <div>{{form.submit}} </div>
     <div> <p><a href="/administration-practice">Next Page</a></p></div>
-
-        
-
 </form>
-
-
-
 {% endblock %} 
+</div>
