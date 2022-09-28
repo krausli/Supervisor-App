@@ -1,7 +1,7 @@
 {% extends "base.html" %}
-
+<link rel="stylesheet" type="text/css" href="../static/main.css">
 <title> {% block title %}Administrator Sign Up{% endblock %}</title>
-
+<div class="raredog">
 {% block content %} 
 <form method = "POST" action="{{url_for('auth.admin_sign_up')}}">
     {{ form.hidden_tag() }}
@@ -66,10 +66,10 @@
         {{ form.submit(class="btn btn-outline-info") }}
     </div>
 </form>
-</div>
 <div class="border-top pt-3">
 <small class="text-muted">
     Already Have An Account? <a class="ml-2" href="{{ url_for('auth.login') }}">Sign In</a>
 </small>
 </div>
 {% endblock %} 
+</div>
