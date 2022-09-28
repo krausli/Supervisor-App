@@ -1,5 +1,6 @@
 {% extends "base.html" %}
-
+<link rel="stylesheet" type="text/css" href="../static/main.css">
+<div class="raredog">
 <title> {% block title %}2.Supervision Practice{% endblock %}</title>
 
 {% block content %} 
@@ -37,9 +38,6 @@
         <div >
             {{form.date}}
        </div>
-    </div>
-    
-  </div>
     <p>2.2 Has respectful professional relationships with all boarders. </p>
         <div>
             {% for choices2 in form.choices2 %}
@@ -59,8 +57,7 @@
         <div >
             {{form.date2}}
         </div>
-            </div>
-        <p>2.3 Supervises boarders effectively, supporting and meeting needs</p>
+         <p>2.3 Supervises boarders effectively, supporting and meeting needs</p>
         <div>
             {% for choices3 in form.choices3 %}
         <tr>
@@ -127,11 +124,6 @@
                    <p><a href="/team-practice">Next Page</a></p>
  
                 </div>
-
-                    
-                    
-    </div>
 </form>
-
-
 {% endblock %} 
+</div>
