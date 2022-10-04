@@ -2,7 +2,7 @@
 import os
 import secrets
 from os import path
-from flask import Flask, abort, Blueprint, render_template, request, flash, redirect, url_for, jsonify
+from flask import Flask, abort, Blueprint, render_template, request, flash, redirect, url_for, jsonify, json
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, login_user, login_required, current_user, logout_user, UserMixin
 from flask_wtf.file import FileField, FileRequired, FileAllowed
@@ -19,7 +19,7 @@ db = SQLAlchemy(app)
 views = Blueprint('views', __name__)
 mail = Mail(app)
 
-from .models import User, Files, Survey
+from .models import User, Files, Survey, Subscription
 from .forms import StartUpForm, UploadForm, EditProfileForm,  StartUpForm
 from . import mail
 
@@ -28,7 +28,7 @@ def create_app():
     
     #db = SQLAlchemy()
     basedir = os.path.abspath(os.path.dirname(__file__))
-    
+
     Authe = "authe.db"
     #secure cookies data
     app.config['SECRET_KEY'] = 'lolo'
@@ -65,6 +65,31 @@ def create_app():
     #import routes
     from .views import views
     from .auth import auth
+
+    #Create yearly product subscription function
+    # def yearly_subscription():
+    #     if request.method == "POST":
+    #         # form = 
+    #         #import subcription
+            
+    #         if subscription_name == "a":
+    #             price = "100"
+    #         elif subscription_name == "b":
+    #             price = "100"
+    #         elif subcription_name == "c":
+    #             price = "100"
+            # productid = request.form.get("email")
+            # new_subscription = Subscription(email=email)
+            #Create time-based subscription requirements
+            #subscription_date = Subscription.data
+            # new_subscription.date = func.now() + func.interval(1, 'year')
+            
+
+            # db.session.add(new_subscription)
+            # db.session.commit()
+        #     flash("You have ", category="success")
+        #     return redirect(url_for("views.home"))
+        # return render_template("home.html", user=current_user)
 
     #def create_database(app)
     if not path.exists('/' + Authe):

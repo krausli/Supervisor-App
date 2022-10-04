@@ -8,9 +8,9 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
 
 
-#define User table
+#import db
 from . import db
-
+#define User table
 class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(255), unique=True)
@@ -19,11 +19,89 @@ class User(db.Model, UserMixin):
     image_file = db.Column(db.String(255), nullable=False, default='default.jpg')
     position = db.Column(db.String(255))
     reviews = db.relationship('Survey', backref='author', lazy=True)
+    is_approved = db.Column(db.Boolean, default=False)
     is_admin = db.Column(db.Boolean, default=False)
     is_manager = db.Column(db.Boolean, default=False)
 
     def __repr__(self):
         return f"User('{self.name}', '{self.email}', '{self.image_file}')"
+
+#Define school table
+class School(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    school_name = db.Column(db.String(255), nullable=False)
+    school_address = db.Column(db.String(255), nullable=False)
+   
+
+#Define Administrator Table
+class SuperUser(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    admin_name = db.Column(db.String(255), nullable=False)
+    admin_email = db.Column(db.String(255), nullable=False)
+    admin_phone = db.Column(db.String(255), nullable=False)
+    school_id = db.Column(db.Integer, db.ForeignKey('school.id'), nullable=False)
+    
+#Define Manager table
+class Manager(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(255), nullable=False)
+    email = db.Column(db.String(255), nullable=False)
+    phone = db.Column(db.String(255), nullable=False)
+    school_id = db.Column(db.Integer, db.ForeignKey('school.id'), nullable=False)
+    school = db.relationship('School', backref=db.backref('managers', lazy=True))
+    
+    def __repr__(self):
+        return f"Manager('{self.name}', '{self.email}', '{self.phone}')"
+
+#Define Supervisor table with school and manager as foreign keys
+class Supervisor(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(255), nullable=False)
+    email = db.Column(db.String(255), nullable=False)
+    phone = db.Column(db.String(255), nullable=False)
+    school_id = db.Column(db.Integer, db.ForeignKey('school.id'), nullable=False)
+    manager_id = db.Column(db.Integer, db.ForeignKey('manager.id'), nullable=False)
+    school = db.relationship('School', backref=db.backref('supervisors', lazy=True))
+    manager = db.relationship('Manager', backref=db.backref('supervisors', lazy=True))
+    
+    def __repr__(self):
+        return f"Supervisor('{self.name}', '{self.email}', '{self.phone}')"
+
+
+#Define Subsciption table
+class Subscription(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    subscription_name = db.Column(db.String(255), nullable=False)
+    subscription_price = db.Column(db.String(255), nullable=False)
+    subscription_duration = db.Column(db.String(255), nullable=False)
+    school_id = db.Column(db.Integer, db.ForeignKey('school.id'), nullable=False)
+    school = db.relationship('School', backref=db.backref('subscriptions', lazy=True))
+    
+    def __repr__(self):
+        return f"Subscription('{self.subscription_name}', '{self.subscription_price}', '{self.subscription_duration}')"
+
+#define Order Table
+class Order(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    order_name = db.Column(db.String(255), nullable=False)
+    order_price = db.Column(db.String(255), nullable=False)
+    order_duration = db.Column(db.String(255), nullable=False)
+    school_id = db.Column(db.Integer, db.ForeignKey('school.id'), nullable=False)
+    school = db.relationship('School', backref=db.backref('orders', lazy=True))
+    
+    def __repr__(self):
+        return f"Order('{self.order_name}', '{self.order_price}', '{self.order_duration}')"
+
+#define subscription by order table
+class SubscriptionByOrder(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    subscription_id = db.Column(db.Integer, db.ForeignKey('subscription.id'), nullable=False)
+    order_id = db.Column(db.Integer, db.ForeignKey('order.id'), nullable=False)
+    subscription = db.relationship('Subscription', backref=db.backref('subscription_by_order', lazy=True))
+    order = db.relationship('Order', backref=db.backref('subscription_by_order', lazy=True))
+    
+    def __repr__(self):
+        return f"SubscriptionByOrder('{self.subscription_id}', '{self.order_id}')"
 
 
 # #define reviews table

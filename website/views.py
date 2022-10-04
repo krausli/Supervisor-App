@@ -37,6 +37,23 @@ from .forms import SurveyForm, StartUpForm, EditProfileForm
 #         send_email, DateTrigger(tduedate), args=(tnumber, company)
 #     )
 
+#Wordpress, Woocommerce API Key
+
+
+#url for post request * change to 
+url = ''
+
+#define webhook function
+@app.route('/webhook', methods=['POST'])
+def webhook():
+    if request.method == 'POST':
+        data = request.get_json()
+        print(data)
+        return jsonify(data), 200
+    else:
+        return abort (400)
+
+
 # #define save picture function
 def save_picture(form_picture):
     random_hex = secrets.token_hex(8)
