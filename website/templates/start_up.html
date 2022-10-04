@@ -1,5 +1,6 @@
 {% extends "base.html" %}
-
+<link rel="stylesheet" type="text/css" href="../static/main.css">
+<div class="raredog">
 <title> {% block title %}Start Up {% endblock %}</title>
 
 {% block content %} 
@@ -8,12 +9,12 @@
 <h1 align = "centre">Start Up Page</h1> 
 <br/>
 <div>
-    <form method = "POST" action = "">
+    <form class = 'form-start' method = "POST" action = "">
         <a>What is your position?:</a>
-        
         <div><a href="/admin-sign-up">{{ form.manager }}{{form.manager.label}}</a></div>
         <div><a href="/sign-up" >{{form.supervisor}}</a></div>
         <div><a href="/admin-sign-up">{{form.admin}}</a></div>
         </form>
 </div>
 {% endblock %} 
+</div>
