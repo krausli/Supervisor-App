@@ -40,10 +40,7 @@ from .forms import SurveyForm, StartUpForm, EditProfileForm
 #Wordpress, Woocommerce API Key
 
 
-#url for post request * change to 
-url = ''
-
-#define webhook function
+#define webhook function for  
 @app.route('/webhook', methods=['POST'])
 def webhook():
     if request.method == 'POST':

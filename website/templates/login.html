@@ -1,9 +1,12 @@
 {% extends "base.html" %}
-<link rel="stylesheet" type="text/css" href="../static/main.css">
-<div class="raredog">
+
+
 <title> {% block title %}Login{% endblock %}</title>
 
 {% block content %} 
+
+<br>
+
 <form method = "POST" action="">
     {{ form.hidden_tag() }}
     {{form.csrf_token}}

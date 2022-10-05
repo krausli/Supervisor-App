@@ -30,9 +30,7 @@ class User(db.Model, UserMixin):
 class School(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     school_name = db.Column(db.String(255), nullable=False)
-    school_address = db.Column(db.String(255), nullable=False)
-   
-
+      
 #Define Administrator Table
 class SuperUser(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -45,8 +43,6 @@ class SuperUser(db.Model):
 class Manager(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(255), nullable=False)
-    email = db.Column(db.String(255), nullable=False)
-    phone = db.Column(db.String(255), nullable=False)
     school_id = db.Column(db.Integer, db.ForeignKey('school.id'), nullable=False)
     school = db.relationship('School', backref=db.backref('managers', lazy=True))
     
