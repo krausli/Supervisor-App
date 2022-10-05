@@ -1,4 +1,5 @@
 #import modules
+from cgitb import enable
 import os
 import secrets
 from os import path
@@ -6,6 +7,7 @@ from flask import Flask, abort, Blueprint, render_template, request, flash, redi
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, login_user, login_required, current_user, logout_user, UserMixin
 from flask_wtf.file import FileField, FileRequired, FileAllowed
+from sqlalchemy import inspect, create_engine
 from sqlalchemy.sql import func, select
 from flask_admin import Admin
 from flask_admin.contrib.sqla import ModelView
@@ -29,10 +31,9 @@ def create_app():
     #db = SQLAlchemy()
     basedir = os.path.abspath(os.path.dirname(__file__))
 
-    Authe = "authe.db"
     #secure cookies data
     app.config['SECRET_KEY'] = 'lolo'
-    app.config ['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'authe.db')
+    app.config ['SQLALCHEMY_DATABASE_URI'] = 'mysql://ops:ops2022@127.0.0.1/ops'
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
     #set up admin
@@ -92,7 +93,10 @@ def create_app():
         # return render_template("home.html", user=current_user)
 
     #def create_database(app)
-    if not path.exists('/' + Authe):
+    engine = create_engine('mysql://ops:ops2022@127.0.0.1/ops')
+    insp = inspect(engine)
+    table_names = insp.get_table_names()
+    if True == False:
             db.create_all(app=app)
             print('Database created')
 
