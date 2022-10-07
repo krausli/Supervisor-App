@@ -70,12 +70,10 @@ def save_picture(form_picture):
 def approval():
     form = ApprovalForm()
     #search all users where school id is equal to current user school id and is not approved or is a superuser
-    users = User.query.filter_by(school_id=current_user.school_id, is_approved=False, is_super=False).all()
-    if users.is_approved == False:
-        users.is_apprved == True
-    elif not users.is_approved == True:
-        users.is_approved == False
-        return render_template('approval.html', users=users)
+    users = User.query.filter_by(school_id=current_user.school_id, is_approved=False, is_superuser=False).all()
+    users.is_approved == True
+    
+    return render_template('approval.html', users=users)
     #loop through users
     # for user in users:
     #     #check if user is admin
@@ -174,7 +172,10 @@ def update_appraisal(review_id):
         flash ('Your survey has been updated', "success")
         return redirect('/saved-reviews')
 
-
+#Define about page
+@views.route("/about")
+def about():
+    return render_template('about.html')
 
 # #define saved reviews page 
 @views.route("/saved-reviews")

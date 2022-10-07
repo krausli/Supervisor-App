@@ -30,8 +30,7 @@ class User(db.Model, UserMixin):
     password = db.Column(db.String(255))
     name = db.Column(db.String(255))
     image_file = db.Column(db.String(255), nullable=False, default='default.jpg')
-    document_file = db.Column(db.String(255), nullable=False)
-    reviews = db.relationship('Survey', backref='author', lazy=True)
+    # reviews = db.relationship('Survey', backref='author', lazy=True)
     school_id = db.Column(db.Integer, db.ForeignKey('school.id'), nullable=False)
     is_approved = db.Column(db.Boolean, default=False)
     is_admin = db.Column(db.Boolean, default=False)
@@ -197,7 +196,7 @@ class Questions(db.Model):
     ForeignKeyConstraint(
                 ['questionnaire_id', 'section_id'],
                 ['questionnaire.id', 'sections.id'],
-                onupdate="CASCADE", ondelete="SET NULL"
+                
     )
     def __repr__(self):
         return f'<SurveyQuestions "{self.title}">'
@@ -232,7 +231,7 @@ class SubQuestions(db.Model):
     ForeignKeyConstraint(
                 ['questionnaire_id', 'section_id', 'question_id'],
                 ['questionnaire.id', 'sections.id', 'questions.id'],
-                onupdate="CASCADE", ondelete="SET NULL"
+                
     )
     def __repr__(self):
         return f'<SurveySubQuestions "{self.text}">'

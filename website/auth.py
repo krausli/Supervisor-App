@@ -59,17 +59,11 @@ def sign_up():
         return redirect(url_for('views.profile'))
     form = RegistrationForm()
     if request.method == 'POST' and form.validate_on_submit():
-            new_user = User(name = form.username.data, email = form.email.data, password = form.password.data )
+            new_user = User(name = form.username.data, email = form.email.data, password = form.password.data, is_approved = False )
             db.session.add(new_user)
             db.session.commit()
-            if current_user.is_approved == True:
-                login_user(new_user, remember=True)
-                flash ('Account created', category = 'success')
-                return redirect(url_for('views.profile'))
-            else:
-                flash ('Please wait for account to be approved by Head of Boarding', category = 'error')
-                return redirect (url_for('auth.sign_up'))
-
+            flash ('Your account is pending please wait for approval by Head of Boarding', category = 'error')
+            return redirect (url_for('auth.sign_up'))
     return render_template('sign_up.html', form = form)
 
 # #define admin sign up route

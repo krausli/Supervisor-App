@@ -1,5 +1,6 @@
 #import modules
-# from cgitb import enable
+from cgitb import enable
+from importlib.metadata import MetadataPathFinder
 import os
 import secrets
 from os import path
@@ -27,7 +28,7 @@ bcrypt = Bcrypt(app)
 views = Blueprint('views', __name__)
 mail = Mail(app)
 
-from .models import User, Files, Survey, Subscription
+from .models import SubscriptionByOrder, User, Files, Survey, Subscription
 from .forms import StartUpForm, UploadForm, EditProfileForm,  StartUpForm
 from . import mail
 
@@ -83,9 +84,27 @@ def create_app():
     engine = create_engine('mysql://ops:ops2022@127.0.0.1/ops')
     insp = inspect(engine)
     table_names = insp.get_table_names()
-    if 'school' not in table_names:
-            db.create_all(app=app)
-            print('Database schema created')
+    # if True == False:## FIXME: need condition to see if 'subscription' is an element of table_names
+    # if 'subscription' not in table_names:
+    # if table_names in table_names:
+    
+    db.create_all(app=app)
+    print('Database created')
+
+          #if not engine.has_table(engine, 'subscription'):  #to test if a database exists
+         #metadata = MetadataPathFinder(engine) 
+           #ops.create(engine, checkfirst=True)
+           #Table('subscription', metadata)
+           #     Column('Id', Integer, primary_key=True, nullable=False),
+           #     Column('First Name', varchar, nullable=False),
+           #     Column('Last Name', varchar, nullable=False),
+           #     Column('EmailID', varchar, nullable=False),
+           #     Column('School Name', varchar, nullable=False),
+           #     Column('Phone Number', integer, nullable=False)
+           #if not database_exists(engine.url):
+    #create_database(engine.url)
+#else:
+    #engine.connect()
 
     #set up email
     # app.config['MAIL_SERVER']='smtp.gmail.com' #127.0.0.1
