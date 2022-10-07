@@ -15,6 +15,10 @@ from .views import views
 
 from .models import db, User
 
+#import other modules
+
+from .__init__ import app, bcrypt
+
 
 #Define authentication approval request route
 # @auth.route('/approval', methods=['GET', 'POST'])
@@ -44,7 +48,7 @@ def login():
 @auth.route('/logout')
 def logout():
     logout_user()
-    return "you have logged out Click here to go back to the <a href='/'>home page</a>"
+    return render_template("home.html")
 
 
 #define sign up
@@ -55,46 +59,46 @@ def sign_up():
         return redirect(url_for('views.profile'))
     form = RegistrationForm()
     if request.method == 'POST' and form.validate_on_submit():
-        if current_user.is_approved:
             new_user = User(name = form.username.data, email = form.email.data, password = form.password.data )
             db.session.add(new_user)
             db.session.commit()
-            login_user(new_user, remember=True)
-            flash ('Account created', category = 'success')
-            return redirect(url_for('views.profile'))
-        else:
-            flash ('Account not approved by Head of Boarding', category = 'error')
-            return redirect (url_for('auth.sign_up'))
+            if current_user.is_approved == True:
+                login_user(new_user, remember=True)
+                flash ('Account created', category = 'success')
+                return redirect(url_for('views.profile'))
+            else:
+                flash ('Please wait for account to be approved by Head of Boarding', category = 'error')
+                return redirect (url_for('auth.sign_up'))
 
     return render_template('sign_up.html', form = form)
 
-#define admin sign up route
-@auth.route("/admin-sign-up", methods = ['GET','POST'])
-def admin_sign_up():
-    form = RegistrationForm()
-    if form.validate_on_submit and request.method == 'POST':
-        new_user = User(email = form.email.data, password = form.password.data, name = form.username.data, admin = True)
-        current_user.is_admin = True
-        db.session.add(new_user)
-        db.session.commit()
-        login_user(new_user, remember=True)
-        flash ('Account created', category = 'success')
+# #define admin sign up route
+# @auth.route("/admin-sign-up", methods = ['GET','POST'])
+# def admin_sign_up():
+#     form = RegistrationForm()
+#     if form.validate_on_submit and request.method == 'POST':
+#         new_user = User(email = form.email.data, password = form.password.data, name = form.username.data, admin = True)
+#         current_user.is_admin = True
+#         db.session.add(new_user)
+#         db.session.commit()
+#         login_user(new_user, remember=True)
+#         flash ('Account created', category = 'success')
         
-    return render_template('admin_sign_up.html')
+#     return render_template('admin_sign_up.html')
 
-# #define admin login route * remember to add more to this
-@auth.route("/admin-login", methods = ['GET','POST'])
-def admin_login():
-    form = LoginForm()
-    if request.method =='POST':
-        email = form.email.data
-        password = form.password.data
-        user = User.query.filter_by(email=email).first()
-        if user:
-            if user.password == password:
-                login_user(user)
-                return redirect(url_for('views.admin'))
-    return render_template('admin_login.html')
+# # #define admin login route * remember to add more to this
+# @auth.route("/admin-login", methods = ['GET','POST'])
+# def admin_login():
+#     form = LoginForm()
+#     if request.method =='POST':
+#         email = form.email.data
+#         password = form.password.data
+#         user = User.query.filter_by(email=email).first()
+#         if user:
+#             if user.password == password:
+#                 login_user(user)
+#                 return redirect(url_for('views.admin'))
+#     return render_template('admin_login.html')
 
 
 

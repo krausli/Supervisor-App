@@ -28,7 +28,7 @@ from . import app
 views = Blueprint('views', __name__)
 
 from .models import db, User, Survey, Files
-from .forms import SurveyForm, StartUpForm, EditProfileForm
+from .forms import ApprovalForm, SurveyForm, StartUpForm, EditProfileForm
 
 #define schedule job
 # @app.route("/success", methods=['POST'])
@@ -64,6 +64,33 @@ def save_picture(form_picture):
     return picture_fn
 
 
+#Create route for approval page
+@app.route('/approval', methods=['GET', 'POST'])
+#define approval function
+def approval():
+    form = ApprovalForm()
+    #search all users where school id is equal to current user school id and is not approved or is a superuser
+    users = User.query.filter_by(school_id=current_user.school_id, is_approved=False, is_super=False).all()
+    if users.is_approved == False:
+        users.is_apprved == True
+    elif not users.is_approved == True:
+        users.is_approved == False
+        return render_template('approval.html', users=users)
+    #loop through users
+    # for user in users:
+    #     #check if user is admin
+    #     if user.is_admin == True:
+    #         #check if user is active
+    #         if user.is_active == True:
+    #             #check if user is approved
+    #             if user.is_approved == False:
+    #                 #check if user is not current user
+    #                 if user != current_user:
+    #                     #send email to user
+    #                     msg = Message('New User Approval',)
+
+    return render_template('approval.html', user=current_user, users=users)
+
 #define profile page 
 @views.route("/profile", methods = ['GET','POST'])
 #@login_required
@@ -88,8 +115,6 @@ def profile():
 @views.route("/")
 def home():
     return render_template("home.html")
-
-
 
 
 #define create new appraisal page
@@ -154,7 +179,9 @@ def update_appraisal(review_id):
 # #define saved reviews page 
 @views.route("/saved-reviews")
 def saved_reviews():
-    reviews = Survey.query.all()
+    #get reviews from survey table where author is current user
+    reviews = Survey.query.filter_by(author = current_user).all()
+    # reviews = Survey.query.all()
     return render_template('saved_reviews.html', reviews = reviews)
 
 # #define page for reviews by current user

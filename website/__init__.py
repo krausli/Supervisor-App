@@ -1,5 +1,5 @@
 #import modules
-from cgitb import enable
+# from cgitb import enable
 import os
 import secrets
 from os import path
@@ -11,13 +11,19 @@ from sqlalchemy import inspect, create_engine
 from sqlalchemy.sql import func, select
 from flask_admin import Admin
 from flask_admin.contrib.sqla import ModelView
+from flask_bcrypt import Bcrypt
 from flask_mail import Mail
+from flask_migrate import Migrate
 
 
 
 
 app = Flask(__name__)
+
+app.config ['SQLALCHEMY_DATABASE_URI'] = 'mysql://ops:ops2022@127.0.0.1/ops'
 db = SQLAlchemy(app)
+migrate = Migrate(app, db)
+bcrypt = Bcrypt(app)
 views = Blueprint('views', __name__)
 mail = Mail(app)
 
@@ -28,12 +34,15 @@ from . import mail
 def create_app():
     #app = Flask(__name__)
     
-    #db = SQLAlchemy()
+    #directory for sqlite
     basedir = os.path.abspath(os.path.dirname(__file__))
+
+    #initialise database
+    # db.init_app(app)
 
     #secure cookies data
     app.config['SECRET_KEY'] = 'lolo'
-    app.config ['SQLALCHEMY_DATABASE_URI'] = 'mysql://ops:ops2022@127.0.0.1/ops'
+    # app.config ['SQLALCHEMY_DATABASE_URI'] = 'mysql://ops:ops2022@127.0.0.1/ops'
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
     #set up admin
@@ -41,7 +50,7 @@ def create_app():
     #initialise database
     #db.init_app(app)
 
-    #Create Class controller * change this
+    #Create Class controller view  * change this
     class Controller(ModelView):
         def is_accessible(self):
             if current_user.is_admin == True:
@@ -67,49 +76,32 @@ def create_app():
     from .views import views
     from .auth import auth
 
-    #Create yearly product subscription function
-    # def yearly_subscription():
-    #     if request.method == "POST":
-    #         # form = 
-    #         #import subcription
-            
-    #         if subscription_name == "a":
-    #             price = "100"
-    #         elif subscription_name == "b":
-    #             price = "100"
-    #         elif subcription_name == "c":
-    #             price = "100"
-            # productid = request.form.get("email")
-            # new_subscription = Subscription(email=email)
-            #Create time-based subscription requirements
-            #subscription_date = Subscription.data
-            # new_subscription.date = func.now() + func.interval(1, 'year')
-            
+        
 
-            # db.session.add(new_subscription)
-            # db.session.commit()
-        #     flash("You have ", category="success")
-        #     return redirect(url_for("views.home"))
-        # return render_template("home.html", user=current_user)
-
-    #def create_database(app)
+    #def create_database(app) 
+    #Find string in an array
     engine = create_engine('mysql://ops:ops2022@127.0.0.1/ops')
     insp = inspect(engine)
     table_names = insp.get_table_names()
-    if True == False:
+    if 'school' not in table_names:
             db.create_all(app=app)
-            print('Database created')
+            print('Database schema created')
 
     #set up email
-    app.config['MAIL_SERVER']='smtp.gmail.com' #127.0.0.1
-    app.config['MAIL_PORT'] = 465
-    app.config['MAIL_USERNAME'] = None
-    app.config['MAIL_PASSWORD'] = None
-    app.config['MAIL_USE_TLS'] = False
-    app.config['MAIL_USE_SSL'] = False
-    #mail = Mail(app)
+    # app.config['MAIL_SERVER']='smtp.gmail.com' #127.0.0.1
+    # app.config['MAIL_PORT'] = 465
+    # app.config['MAIL_USERNAME'] = None
+    # app.config['MAIL_PASSWORD'] = None
+    # app.config['MAIL_USE_TLS'] = False
+    # app.config['MAIL_USE_SSL'] = False
+    # mail = Mail(app)
 
-    
+    app.config['MAIL_SERVER'] = 'smtp.googlemail.com'
+    app.config['MAIL_PORT'] = 587
+    app.config['MAIL_USE_TLS'] = True
+    app.config['MAIL_USERNAME'] = os.environ.get('EMAIL_USER')
+    app.config['MAIL_PASSWORD'] = os.environ.get('EMAIL_PASS')
+    mail = Mail(app)
 
     #initialise database
     # db.init_app(app)
@@ -119,9 +111,6 @@ def create_app():
     app.register_blueprint(auth, url_prefix = "/")
 
     
-
-
-
     #Create User Loader
     #login_manager = LoginManager()
     @login_manager.user_loader
