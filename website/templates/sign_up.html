@@ -7,7 +7,6 @@
 <form method = "POST" action="{{url_for('auth.sign_up')}}">
     {{ form.hidden_tag() }}
     {{form.csrf_token}}
-<<<<<<< HEAD
     <fieldset class="form-group">
         <legend class="border-bottom mb-4">Join Today</legend>
 
@@ -28,12 +27,6 @@
 
 
         <div class="form-group">
-=======
-    <fieldset class="form-group-new">
-        <!--<legend class="border-bottom mb-4">Join Today</legend>-->
-        <div class="border-bottom login-title" style="margin-top: -20px;">Join Today</div>
-        <div>
->>>>>>> 7f2b0c47243b77acc4c6e4fcaedfe07610d3de6a
             {{ form.username.label(class="form-control-label") }}
 
             {% if form.username.errors %}

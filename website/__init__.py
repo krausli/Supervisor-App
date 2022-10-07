@@ -72,6 +72,9 @@ def create_app():
     login_manager.login_view = "login"
     login_manager.login_message_category = "info"
 
+    #Import models
+    from .models import School
+
     
     #import routes
     from .views import views
@@ -85,11 +88,12 @@ def create_app():
     insp = inspect(engine)
     table_names = insp.get_table_names()
     # if True == False:## FIXME: need condition to see if 'subscription' is an element of table_names
-    # if 'subscription' not in table_names:
-    # if table_names in table_names:
-    
-    db.create_all(app=app)
-    print('Database created')
+    if 'subscription' not in table_names:
+        db.create_all(app=app)
+        in_school = School(school_name = "UniOlly")
+        db.session.add(in_school)
+        db.session.commit()
+        print('Database created')
 
           #if not engine.has_table(engine, 'subscription'):  #to test if a database exists
          #metadata = MetadataPathFinder(engine) 

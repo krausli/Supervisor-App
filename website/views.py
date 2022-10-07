@@ -71,8 +71,9 @@ def approval():
     form = ApprovalForm()
     #search all users where school id is equal to current user school id and is not approved or is a superuser
     users = User.query.filter_by(school_id=current_user.school_id, is_approved=False, is_superuser=False).all()
-    users.is_approved == True
     
+    login_user(users, accept = form.accept.data)
+      
     return render_template('approval.html', users=users)
     #loop through users
     # for user in users:
