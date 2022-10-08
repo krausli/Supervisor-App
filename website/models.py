@@ -3,7 +3,7 @@ from flask_login import UserMixin, LoginManager
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.sql import func
 from datetime import datetime
-from sqlalchemy import PrimaryKeyConstraint, ForeignKeyConstraint, Column, String, Integer
+from sqlalchemy import PrimaryKeyConstraint, ForeignKeyConstraint, Column, String, Integer, UniqueConstraint
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
 # from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
@@ -175,7 +175,8 @@ class Survey(db.Model):
 #define Questionnaire table
 class Questionnaire(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    date = db.Column(db.DateTime(timezone=True), default=func.now())
+    name = db.Column(db.String(255))
+    date_posted = db.Column(db.DateTime(timezone=True), default=func.now())
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     
         
@@ -183,7 +184,13 @@ class Questionnaire(db.Model):
 class Sections(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     questionnaire_id = db.Column(db.Integer, db.ForeignKey('questionnaire.id'))
-    title = db.Column(db.String(100))
+    title = db.Column(db.String(100)) #Varchar
+
+   
+    #make questionnaire and section id  composite primary key
+    __table_args__ = (db.PrimaryKeyConstraint('id', 'questionnaire_id'),)
+
+
     def __repr__(self):
         return f'<SurveySections "{self.title}">'
 
@@ -191,51 +198,163 @@ class Sections(db.Model):
 class Questions(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(100))
-    questionnaire_id = db.Column(db.Integer)
-    section_id = db.Column(db.Integer)
-    ForeignKeyConstraint(
-                ['questionnaire_id', 'section_id'],
-                ['questionnaire.id', 'sections.id'],
-                
-    )
+    questionnaire_id = db.Column(db.Integer, db.ForeignKey('questionnaire.id'))
+    section_id = db.Column(db.Integer, db.ForeignKey('sections.id'))
+
+    # #make section number and questionnaire number foreign key constraints
+    # __table_args__ = (db.UniqueConstraint(['section_id', 'questionnaire_id'], ['sections.id', 'questionnaire.id']),)
+
+    #make section number and questionnaire number and question number composite primary key
+    __table_args2__ = (db.PrimaryKeyConstraint('id', 'section_id', 'questionnaire_id'),)
+
     def __repr__(self):
         return f'<SurveyQuestions "{self.title}">'
 
-# #define survey sub-questions
-class SubQuestions(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    text = db.Column(db.String(100))
-    questionnaire_id = db.Column(db.Integer)
-    section_id = db.Column(db.Integer)
-    question_id = db.Column(db.Integer)
-    choices = db.Column(db.String(255))
-    comments = db.Column(db.String(255))
-    evidence = db.Column(db.String(255))
-    actions = db.Column(db.String(255))
-    choices2 = db.Column(db.String(255))
-    comments2 = db.Column(db.String(255))
-    evidence2 = db.Column(db.String(255))
-    actions2 = db.Column(db.String(255))
-    choices3 = db.Column(db.String(255))
-    comments3 = db.Column(db.String(255))
-    evidence3 = db.Column(db.String(255))
-    actions3 = db.Column(db.String(255))
-    choices4 = db.Column(db.String(255))
-    comments4 = db.Column(db.String(255))
-    evidence4 = db.Column(db.String(255))
-    actions4 = db.Column(db.String(255))
-    choices5 = db.Column(db.String(255))
-    comments5 = db.Column(db.String(255))
-    evidence5 = db.Column(db.String(255))
-    actions5 = db.Column(db.String(255))
-    ForeignKeyConstraint(
-                ['questionnaire_id', 'section_id', 'question_id'],
-                ['questionnaire.id', 'sections.id', 'questions.id'],
-                
-    )
-    def __repr__(self):
-        return f'<SurveySubQuestions "{self.text}">'
 
+#Dotpoints
+#questionnaire, question, section, sequence - primary key constraint
+# questionnaire, question, section, - foreign key constraint
+
+#define dotpoints table with foreign key constraint of questionnaire, question and section and primary key constraint of questionnaire, question, section and sequence
+class Dotpoints(db.Model):
+    sequence_id = db.Column(db.Integer, primary_key=True)
+    questionnaire_id = db.Column(db.Integer, db.ForeignKey('questionnaire.id'))
+    section_id = db.Column(db.Integer, db.ForeignKey('sections.id'))
+    question_id = db.Column(db.Integer, db.ForeignKey('questions.id'))
+    title = db.Column(db.String(100))
+
+   #make questionnaire, question, section, sequence - primary key constraint
+    __table_args__ = (db.PrimaryKeyConstraint('sequence_id', 'questionnaire_id', 'section_id', 'question_id'),)
+
+    #make questionnaire, question, section a foreign key constraint, referencing questionnaire, question and section tables
+
+    __table_args2__ = (db.ForeignKeyConstraint(['questionnaire_id', 'section_id', 'question_id'], ['questionnaire.id', 'sections.id', 'questions.id']),)
+
+    
+    def __repr__(self):
+        return f'<SurveyDotpoints "{self.title}">'
+
+#Define response table with foreign key constraint of questionnaire, question, section and dotpoint and primary key constraint of questionnaire, question, section, dotpoint and sequence
+class Response(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    questionnaire_id = db.Column(db.Integer, db.ForeignKey('questionnaire.id'))
+    section_id = db.Column(db.Integer, db.ForeignKey('sections.id'))
+    question_id = db.Column(db.Integer, db.ForeignKey('questions.id'))
+    sequence_id = db.Column(db.Integer, db.ForeignKey('dotpoints.sequence_id'))
+    title = db.Column(db.String(100))
+   
+    #make questionnaire, question, section,  sequence   - primary key constraint
+    __table_args__ = (db.PrimaryKeyConstraint('id', 'questionnaire_id', 'section_id', 'question_id', 'sequence_id'),)
+    
+    #make questionnaire, question, section, dotpoint a foreign key constraint, referencing questionnaire, question, section and dotpoint tables
+    __table_args2__ = (db.ForeignKeyConstraint(['questionnaire_id', 'section_id', 'question_id', 'sequence_id'], ['questionnaire.id', 'sections.id', 'questions.id', 'dotpoints.sequence_id']),)
+
+    # ForeignKeyConstraint(
+    #             ['questionnaire_id', 'section_id', 'question_id', 'dotpoint_id'],
+    #             ['questionnaire.id', 'sections.id', 'questions.id', 'dotpoints.id'],
+                
+    # )
+    def __repr__(self):
+        return f'<SurveyChoices "{self.title}">'
+
+    #Define action table with foreign key constraint of questionnaire, question, section and dotpoint and primary key constraint of questionnaire, question, section, dotpoint and sequence
+class Action(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    questionnaire_id = db.Column(db.Integer, db.ForeignKey('questionnaire.id'))
+    section_id = db.Column(db.Integer, db.ForeignKey('sections.id'))
+    question_id = db.Column(db.Integer, db.ForeignKey('questions.id'))
+    sequence_id = db.Column(db.Integer, db.ForeignKey('dotpoints.sequence_id'))
+    title = db.Column(db.String(100))
+   
+    #make questionnaire, question, section,  sequence   - primary key constraint
+    __table_args__ = (db.PrimaryKeyConstraint('id', 'questionnaire_id', 'section_id', 'question_id', 'sequence_id'),)
+    
+    #make questionnaire, question, section, dotpoint a foreign key constraint, referencing questionnaire, question, section and dotpoint tables
+    __table_args2__ = (db.ForeignKeyConstraint(['questionnaire_id', 'section_id', 'question_id', 'sequence_id'], ['questionnnaire.id', 'sections.id', 'questions.id', 'dotpoints.sequence_id']),)
+
+    def __repr__(self):
+        return f'<SurveyChoices "{self.title}">'
+
+
+   #Make comments table with foreign key constraint of questionnaire, question, section and dotpoint and primary key constraint of questionnaire, question, section, dotpoint and sequence
+class Comments(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    questionnaire_id = db.Column(db.Integer, db.ForeignKey('questionnaire.id'))
+    section_id = db.Column(db.Integer, db.ForeignKey('sections.id'))
+    question_id = db.Column(db.Integer, db.ForeignKey('questions.id'))
+    sequence_id = db.Column(db.Integer, db.ForeignKey('dotpoints.sequence_id'))
+    title = db.Column(db.String(100))
+   
+    #make questionnaire, question, section,  sequence   - primary key constraint
+    __table_args__ = (db.PrimaryKeyConstraint('id', 'questionnaire_id', 'section_id', 'question_id', 'sequence_id'),)
+    
+    #make questionnaire, question, section, dotpoint a foreign key constraint, referencing questionnaire, question, section and dotpoint tables
+    __table_args2__ = (db.ForeignKeyConstraint(['questionnaire_id', 'section_id', 'question_id', 'sequence_id'], ['questionnaire.id', 'sections.id', 'questions.id', 'dotpoints.sequence_id']),)
+
+    def __repr__(self):
+        return f'<SurveyChoices "{self.title}">'
+    
+    #Make evidence table with foreign key constraint of questionnaire, question, section and dotpoint and primary key constraint of questionnaire, question, section, dotpoint and sequence
+class Evidence(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    questionnaire_id = db.Column(db.Integer, db.ForeignKey('questionnaire.id'))
+    section_id = db.Column(db.Integer, db.ForeignKey('sections.id'))
+    question_id = db.Column(db.Integer, db.ForeignKey('questions.id'))
+    sequence_id = db.Column(db.Integer, db.ForeignKey('dotpoints.sequence_id'))
+    title = db.Column(db.String(100))
+   
+    #make questionnaire, question, section,  sequence   - primary key constraint
+    __table_args__ = (db.PrimaryKeyConstraint('id', 'questionnaire_id', 'section_id', 'question_id', 'sequence_id'),)
+    
+    #make questionnaire, question, section, dotpoint a foreign key constraint, referencing questionnaire, question, section and dotpoint tables
+    __table_args2__ = (db.ForeignKeyConstraint(['questionnaire_id', 'section_id', 'question_id', 'sequence_id'], ['questionnaire.id', 'sections.id', 'questions.id', 'dotpoints.sequence_id']),)
+
+    def __repr__(self):
+        return f'<SurveyChoices "{self.title}">'
+    
+
+
+
+# # #define survey sub-questions
+# class SubQuestions(db.Model):
+#     heading = db.Column(db.String(100))
+#     questionnaire_id = db.Column(db.Integer)
+#     section_id = db.Column(db.Integer)
+#     question_id = db.Column(db.Integer)
+#     choices = db.Column(db.String(255))
+#     comments = db.Column(db.String(255))
+#     evidence = db.Column(db.String(255))
+#     actions = db.Column(db.String(255))
+#     choices2 = db.Column(db.String(255))
+#     comments2 = db.Column(db.String(255))
+#     evidence2 = db.Column(db.String(255))
+#     actions2 = db.Column(db.String(255))
+#     choices3 = db.Column(db.String(255))
+#     comments3 = db.Column(db.String(255))
+#     evidence3 = db.Column(db.String(255))
+#     actions3 = db.Column(db.String(255))
+#     choices4 = db.Column(db.String(255))
+#     comments4 = db.Column(db.String(255))
+#     evidence4 = db.Column(db.String(255))
+#     actions4 = db.Column(db.String(255))
+#     choices5 = db.Column(db.String(255))
+#     comments5 = db.Column(db.String(255))
+#     evidence5 = db.Column(db.String(255))
+#     actions5 = db.Column(db.String(255))
+#     ForeignKeyConstraint(
+#                 ['questionnaire_id', 'section_id', 'question_id'],
+#                 ['questionnaire.id', 'sections.id', 'questions.id'],
+                
+#     )
+
+#     #make question number , questionnaire and section composite primary key
+#     PrimaryKeyConstraint('questionnaire_id', 'section_id', 'question_id', name='questionnaire_section_question_id')
+    
+
+#     def __repr__(self):
+#         return f'<SurveySubQuestions "{self.heading}">'
+
+#dot_points  = sectionnumber, question_numner, questionnaire_number, sequence_number
 
 
 

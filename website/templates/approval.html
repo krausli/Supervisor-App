@@ -1,22 +1,37 @@
-{%extends base.html%}
+{%extends 'base.html' %}
 
 {%block title%}Approval{%endblock%}
 
 {%block content%}
 
-<form method = "post" action = "">
-    <h1>Approval</h1>
-    <p> Your request will be sent to the administrator for approval.</p>
+        <!--input type = radio name = user_id value = 1>
+        Accept
+        
+        <input type = radio name user_id value = -1>
 
-     {%for user in users %}
-        <p>{{user.username}}</p>
-        <p>{{user.email}}</p>
-        <p><a >Approve/Reject</a></p>
-        <div class="form-check">
-            {{ form.accept(class="form-check-input") }}
-            {{ form.accept.label(class="form-check-label") }}
-        </div>
-    {%endfor%}
+        <input type = radio name = user_id value = 0>>-->
+
+    </fieldset>
+     {%if users %}
+     <form method = "post" action = "/approval"><h1>Approval</h1>
+        {%for user in users %}
+            <fieldset>
+                {{user.username}} {{user.email}}
+                &nbsp; Accept, Reject, or Defer
+                <!--<input type="radio" name="user_{{user.username}}" value="1" />-->
+                 {{form.accept}}
+                <!--&nbsp; Reject-->
+                <!--<input type="radio" name="user_{{user.username}}" value="-1" />-->
+                
+                <!--&nbsp; Defer-->
+                <!--<input type="radio" name="user_{{user.username}}" value="0" checked="checked" />-->
+                
+            </fieldset>      
+        {%endfor%}
+         <!-- submit buttn goes here -->
+          {{form.submit}}
+     {%endif%}
+
 
 </form>
 

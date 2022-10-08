@@ -29,7 +29,7 @@ views = Blueprint('views', __name__)
 mail = Mail(app)
 
 from .models import SubscriptionByOrder, User, Files, Survey, Subscription
-from .forms import StartUpForm, UploadForm, EditProfileForm,  StartUpForm
+from .forms import UploadForm, EditProfileForm
 from . import mail
 
 def create_app():

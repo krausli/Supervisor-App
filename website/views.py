@@ -28,7 +28,7 @@ from . import app
 views = Blueprint('views', __name__)
 
 from .models import db, User, Survey, Files
-from .forms import ApprovalForm, SurveyForm, StartUpForm, EditProfileForm
+from .forms import ApprovalForm, SurveyForm, EditProfileForm
 
 #define schedule job
 # @app.route("/success", methods=['POST'])
@@ -70,11 +70,23 @@ def save_picture(form_picture):
 def approval():
     form = ApprovalForm()
     #search all users where school id is equal to current user school id and is not approved or is a superuser
-    users = User.query.filter_by(school_id=current_user.school_id, is_approved=False, is_superuser=False).all()
+    users = User.query.filter_by(school_id=current_user.school_id, is_approved=False).all()
+
+    for row in users:
+        if form.accept.data == 'accept':
+            row.is_approved = True
+            db.session.commit()
+            flash('User has been approved', category='success')
+        elif form.accept.data == 'reject':
+            row.is_approved = False
+            db.session.commit()
+            flash('User has been rejected', category='success')
+        
     
-    login_user(users, accept = form.accept.data)
-      
-    return render_template('approval.html', users=users)
+    
+      # login_user(users, accept = form.accept.data)
+    
+    return render_template('approval.html', users=users, form=form)
     #loop through users
     # for user in users:
     #     #check if user is admin
@@ -203,7 +215,7 @@ def saved_reviews():
 #define managed reviews page
 @views.route("/managed-reviews")
 def managed_reviews():
-    if current_user.is_admin:
+    if current_user.is_superuser:
         reviews = Survey.query.all()
         return render_template("managed_reviews.html", reviews = reviews)
     elif current_user.is_manager:
@@ -214,17 +226,7 @@ def managed_reviews():
     
     
 
-#define start-up page * Change this 
-@views.route("/start-up", methods = ['GET','POST'])
-def start_up():
-    form = StartUpForm
-    if form.validate_on_submit and request.method == "POST":
-        db.session.add(form)
-        db.session.commit()
-        flash('Your form has been submitted!', 'success')
-    
-    
-    return render_template("start_up.html", form = form)
+
 
 
 

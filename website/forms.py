@@ -123,9 +123,16 @@ class ResetPasswordForm(FlaskForm):
     submit = SubmitField('Reset Password')
 
 class ApprovalForm(FlaskForm):
-    accept = BooleanField('Accept')
-    approve = SubmitField('Approve')
-    reject = SubmitField('Reject')
+    # accept = RadioField('Accept')
+    # reject = RadioField('Reject')
+    # defer = RadioField("Defer")
+
+    accept = RadioField('Choices', choices = [('accept','1'),('reject','-1'),('defer','0')])
+
+    submit = SubmitField("Submit")
+    
+
+    
 
 
 
@@ -270,14 +277,17 @@ class UploadForm(FlaskForm):
     # team = wtforms.FormField(Team)
     # administration = wtforms.FormField(Administration)
 
-#Start-Up Page Form
-class StartUpForm(FlaskForm):
-    supervisor = BooleanField("Supervisor")
-    manager = BooleanField("Manager")
-    admin = BooleanField("Admin")
 
 # #EditUser Form
 # class EditUserForm(FlaskForm):
 #     username = StringField('Username', validators=[DataRequired(), Length(min=2, max=20)])
 #     email = StringField('Email', validators=[DataRequired(), Email()])
 #     submit = SubmitField('Update')
+
+##Select * from sections where questionionnaire = 1, orderedby section_number (Ascending)
+##HTML -  section_number, section_name
+##Select * questions where questionnaire = 1 and section_number =  questionnaire.section_number orderedby  question_number ascending
+##HTML section_number.question.question_number.question_title.
+##select * from dotpoints where questionnaire = 1
+# and section = questionnaire.section_num
+# and question = current.section.question_number orderedby sequence_number ascending
