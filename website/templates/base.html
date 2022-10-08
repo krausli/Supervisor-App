@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
   <link rel="stylesheet" type="text/css" href="../static/main.css">
+  <!--<link rel="stylesheet" type="text/css" href="../static/css/style.css">-->
   <div class="raredog">
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -30,6 +31,11 @@
              {% if current_user.is_authenticated and current_user.is_admin %}
               <a class="nav-item nav-link" href="{{ url_for('views.create_appraisal') }}">New Review</a>
               <a class="nav-item nav-link" href="/admin">Control Panel</a>
+              <a class="nav-item nav-link" href="{{ url_for('views.profile') }}">profile</a>
+              <a class="nav-item nav-link" href="{{ url_for('auth.logout') }}">Logout</a>
+            {% elif current_user.is_authenticated and current_user.is_superuser%}
+              <a class="nav-item nav-link" href="{{ url_for('views.create_appraisal') }}">New Review</a>
+              <a class="nav-item nav-link" href="/user-table">Users</a>
               <a class="nav-item nav-link" href="{{ url_for('views.profile') }}">profile</a>
               <a class="nav-item nav-link" href="{{ url_for('auth.logout') }}">Logout</a>
             {% elif current_user.is_authenticated %}

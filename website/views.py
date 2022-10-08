@@ -324,31 +324,33 @@ def direct_home():
 
 
 #define user table route
-@views.route("/user-table")
+@views.route("/user-table", methods = ['GET','POST'])
 def user_table():
     form = EditUserForm()
     #get users from user table that are approved and have the same school id as current user
     users = User.query.filter_by(is_approved = True, school_id = current_user.school_id).all()
 
     for row in users:
-        if form.is_manager.data:
-            users.is_manager = True
+        if form.is_manager.data == True:
+            users.is_manager == True
     for row in users:
-        if form.is_superuser.data:
-            users.is_superuser = True
+        if form.is_superuser.data == True:
+            users.is_superuser == True
     return render_template("table.html", users = users, form = form)
 
 # #define edit_user route
 @views.route("/edit_user/<int:id>", methods = ['GET','POST'])
 def edit_user(id):
+    #get users from user table that are approved and have the same school id as current user
     user = User.query.get_or_404(id)
-    form = EditUserForm(obj=user)
+    form = EditUserForm()
     if request.method == "POST" and form.validate():
-        form.populate_obj(user)
+        current_user.name = form.username.data
+        current_user.email = form.email.data
         db.session.commit()
         flash('Your changes have been saved')
         return redirect(url_for('views.user_table'))
-    return render_template("edit_user.html", form = form)
+    return render_template("edit_user.html", form = form, user = user)
       
 
 # #define appraisal matrix page 
