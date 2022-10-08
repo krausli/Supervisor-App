@@ -127,7 +127,7 @@ class ApprovalForm(FlaskForm):
     # reject = RadioField('Reject')
     # defer = RadioField("Defer")
 
-    accept = RadioField('Choices', choices = [('accept','1'),('reject','-1'),('defer','0')])
+    accept = RadioField('Choices', choices = [('accept','accept'),('reject','reject'),('defer','reject')])
 
     submit = SubmitField("Submit")
     
@@ -278,11 +278,13 @@ class UploadForm(FlaskForm):
     # administration = wtforms.FormField(Administration)
 
 
-# #EditUser Form
-# class EditUserForm(FlaskForm):
-#     username = StringField('Username', validators=[DataRequired(), Length(min=2, max=20)])
-#     email = StringField('Email', validators=[DataRequired(), Email()])
-#     submit = SubmitField('Update')
+#EditUser Form
+class EditUserForm(FlaskForm):
+    username = StringField('Username', validators=[DataRequired(), Length(min=2, max=20)])
+    email = StringField('Email', validators=[DataRequired(), Email()])
+    is_manager = BooleanField('Manager')
+    is_superuser = BooleanField('Superuser')
+    submit = SubmitField('Update')
 
 ##Select * from sections where questionionnaire = 1, orderedby section_number (Ascending)
 ##HTML -  section_number, section_name

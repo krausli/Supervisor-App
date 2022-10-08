@@ -28,7 +28,7 @@ from . import app
 views = Blueprint('views', __name__)
 
 from .models import db, User, Survey, Files
-from .forms import ApprovalForm, SurveyForm, EditProfileForm
+from .forms import ApprovalForm, SurveyForm, EditProfileForm, EditUserForm
 
 #define schedule job
 # @app.route("/success", methods=['POST'])
@@ -323,23 +323,32 @@ def direct_home():
 #         due_date4 = form.date4.data
 
 
-# #define user table route
-# @views.route("/user-table")
-# def user_table():
-#     users = User.query.all()
-#     return render_template("table.html", users = users)
+#define user table route
+@views.route("/user-table")
+def user_table():
+    form = EditUserForm()
+    #get users from user table that are approved and have the same school id as current user
+    users = User.query.filter_by(is_approved = True, school_id = current_user.school_id).all()
+
+    for row in users:
+        if form.is_manager.data:
+            users.is_manager = True
+    for row in users:
+        if form.is_superuser.data:
+            users.is_superuser = True
+    return render_template("table.html", users = users, form = form)
 
 # #define edit_user route
-# @views.route("/edit_user/<int:id>", methods = ['GET','POST'])
-# def edit_user(id):
-#     user = User.query.get_or_404(id)
-#     form = EditUserForm(obj=user)
-#     if request.method == "POST" and form.validate():
-#         form.populate_obj(user)
-#         db.session.commit()
-#         flash('Your changes have been saved')
-#         return redirect(url_for('views.user_table'))
-#     return render_template("edit_user.html", form = form)
+@views.route("/edit_user/<int:id>", methods = ['GET','POST'])
+def edit_user(id):
+    user = User.query.get_or_404(id)
+    form = EditUserForm(obj=user)
+    if request.method == "POST" and form.validate():
+        form.populate_obj(user)
+        db.session.commit()
+        flash('Your changes have been saved')
+        return redirect(url_for('views.user_table'))
+    return render_template("edit_user.html", form = form)
       
 
 # #define appraisal matrix page 
