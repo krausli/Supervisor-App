@@ -10,6 +10,7 @@
       <div class="media-body">
         <h2 class="account-heading">{{ current_user.username }}</h2>
         <p class="text-secondary">{{ current_user.email }}</p>
+        <p class="text-secondary">{{ current_user.position }}</p>
       </div>
     </div>
       <form method="POST" action="" enctype="multipart/form-data">
@@ -44,6 +45,20 @@
                       {{ form.email(class="form-control form-control-lg") }}
                   {% endif %}
               </div>
+              <div class="form-group">
+                {{ form.licence.label(class="form-control-label") }}
+
+                {% if form.licence.errors %}
+                    {{ form.licence(class="form-control form-control-lg is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in form.licence.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    {{ form.licence(class="form-control form-control-lg") }}
+                {% endif %}
+            </div>
               <div class="form-group">
                   {{ form.picture.label() }}
                   {{ form.picture(class="form-control-file") }}

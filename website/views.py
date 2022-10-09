@@ -1,6 +1,7 @@
 #import modules
 import os.path
 import secrets
+from turtle import position
 from PIL import Image
 from flask import Blueprint, render_template, jsonify, redirect, url_for, request, flash, abort
 from flask_login import LoginManager, login_user, login_required, current_user, logout_user
@@ -27,7 +28,7 @@ from . import app
 #set up Blueprint
 views = Blueprint('views', __name__)
 
-from .models import db, User, Survey, Files
+from .models import db, User, Survey, Files, School
 from .forms import ApprovalForm, SurveyForm, EditProfileForm, EditUserForm
 
 #define schedule job
@@ -113,7 +114,21 @@ def profile():
             current_user.image_file = picture_file
         current_user.name = form.username.data
         current_user.email = form.email.data
+        current_user.licence = form.licence.data
         db.session.commit()
+        current_user.position = position
+        if current_user.is_admin == True:
+            position = "Admin"
+        elif current_user.is_superuser == True:
+            position = "Admin"
+        elif current_user.is_manager == True:
+            position = "Manager"
+        else:
+            position = "Supervisor"
+        # position = form.position.data
+        user = User(position = position)
+        db.session.commit(user)
+        
         flash("Your account has been updated!", category='success')
         return redirect(url_for('views.profile'))
     elif request.method == 'GET':
@@ -125,7 +140,16 @@ def profile():
 #define home page 
 @views.route("/")
 def home():
-    return render_template("home.html")
+    
+    user = current_user
+    
+    #get the school id of the current user
+    user_s = current_user.school_id
+
+    #Get the matching school name from the school table
+    school = School.query.filter_by(id=user).first()
+   
+    return render_template("home.html", school =school)
 
 
 #define create new appraisal page
@@ -327,7 +351,8 @@ def direct_home():
 @views.route("/user-table", methods = ['GET','POST'])
 def user_table():
     form = EditUserForm()
-    #get users from user table that are approved and have the same school id as current user
+    #get users from user table that are approved and have the same school id as current user but are not superuser
+    #  users = User.query.filter_by(is_approved = True, school_id = current_user.school_id, is_superuser = False).all()
     users = User.query.filter_by(is_approved = True, school_id = current_user.school_id).all()
 
     for row in users:

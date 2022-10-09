@@ -22,13 +22,18 @@ def load_user(user_id):
 class School(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     school_name = db.Column(db.String(255), nullable=False)
+    user = db.relationship('User', backref='school', lazy=True)
 
 #define User table
 class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(255), unique=True)
     password = db.Column(db.String(255))
+    first_name = db.Column(db.String(255))
+    last_name = db.Column(db.String(255))
     name = db.Column(db.String(255))
+    licence = db.Column(db.String(255))
+    position = db.Column(db.String(255))
     image_file = db.Column(db.String(255), nullable=False, default='default.jpg')
     # reviews = db.relationship('Survey', backref='author', lazy=True)
     school_id = db.Column(db.Integer, db.ForeignKey('school.id'), nullable=False)

@@ -14,7 +14,11 @@ from .models import User
 #Edit profile form
 class EditProfileForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired(), Length(min=2, max=20)])
+    first_name = StringField('First Name')
+    last_name = StringField('Last Name')
     email = StringField('Email', validators=[DataRequired(), Email()])
+    licence = StringField ('Licences')
+    position = StringField('Position')
     picture = FileField('Update Profile Picture', validators=[FileAllowed(['jpg', 'png'])])
     submit = SubmitField('Update')
     def validate_username(self, username):
@@ -240,6 +244,8 @@ class ApprovalForm(FlaskForm):
 #Registration Form
 class RegistrationForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired(), Length(min=2, max=20)])
+    first_name = StringField('First Name')
+    last_name = StringField('Last Name')
     email = StringField('Email', validators=[DataRequired(), Email()])
     school_id = StringField('Input School Id')
     password = PasswordField('Password')
