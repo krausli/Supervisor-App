@@ -143,8 +143,8 @@ def home():
     
     user = current_user
     
-    #get the school id of the current user
-    user_s = current_user.school_id
+    # #get the school id of the current user
+    # user_s = current_user.school_id
 
     #Get the matching school name from the school table
     school = School.query.filter_by(id=user).first()
