@@ -198,6 +198,7 @@ header h2 {
   -webkit-background-clip: text;
   color: #fdfdfe;
   text-shadow: 0px 0px 5px #8CA6DB, 0px 0px 10px #8CA6DB, 0px 0px 10px #8CA6DB, 0px 0px 20px #8CA6DB;
+  text-align: center;
 }
 
 header h3 {
@@ -356,14 +357,14 @@ hr {
 
 *{box-sizing: border-box;margin: 0;padding: 0; outline: none; transition: all 0.3s ease; animation-delay: 0s;}
 
-body {
+/**body {
   background: #74ebd5;
   background: -webkit-linear-gradient(to bottom, #74ebd5, #acb6e5);
   background: linear-gradient(to bottom, #74ebd5, #acb6e5);
   font-size: 16px;
   line-height: 6;
   color: #888;
-}
+}**/
 
 h1, h2, h3, h4, h5 ,h6{
   font-weight: 200;
